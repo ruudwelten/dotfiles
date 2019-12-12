@@ -10,3 +10,9 @@ $ cd ~/.dotfiles
 $ chmod +x install.sh
 $ ./install.sh
 ```
+
+## To do
+
+- Install Homebrew, npm, Atom + packages, iTerm2, zsh + theme
+- Install macOS services
+- Check out: [Homebrew bundle](https://github.com/Homebrew/homebrew-bundle)
