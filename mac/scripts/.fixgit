@@ -1,0 +1,6 @@
+#!/bin/bash
+
+D=$(date +%Y%m%d%H%M%S)
+echo $D
+mv ./.git/index ./.git/index.bak$D
+cp ./.git/index.bak$D ./.git/index
