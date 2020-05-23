@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -e
+
+BASE=<base_directory>
+STAGING_DIR="$BASE/<staging_directory>"
+PRODUCTION_DIR="$BASE/<production_directory>"
+
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+LOG="$BASE/deployments.log"
+
+while read oldrev newrev refname
+do
+    branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+
+    if [ $branch = "staging" ] || [ $branch = "production" ]; then
+        BRANCH_DIR=$STAGING_DIR
+        if [ $branch = "production" ]; then
+            BRANCH_DIR=$PRODUCTION_DIR
+        fi
+        BRANCH_TEMP_DIR="$BASE/$branch.temp"
+
+        rm -rf $BRANCH_TEMP_DIR
+        mkdir -p $BRANCH_TEMP_DIR
+        cd $BRANCH_TEMP_DIR
+
+        git --work-tree=$BRANCH_TEMP_DIR --git-dir=$BASE/repository.git checkout $branch -f
+
+        mkdir -p $BRANCH_DIR
+        shopt -s dotglob
+        mv $BRANCH_TEMP_DIR/* $BRANCH_DIR
+        shopt -u dotglob
+        rm -rf $BRANCH_TEMP_DIR
+
+        echo "$DATE ${oldrev:0:7}..${newrev:0:7} Deploying $branch to $BRANCH_DIR" >> $LOG
+    else
+        git --git-dir=$BASE/repository.git branch -d $branch
+
+        echo "$DATE ${oldrev:0:7}..${newrev:0:7} Deployment failed. Branch name can only be 'staging' or 'production', '$branch' was submitted." >> $LOG
+    fi
+done
