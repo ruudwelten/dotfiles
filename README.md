@@ -13,6 +13,5 @@ $ ./install.sh
 
 ## To do
 
-- Install Homebrew, npm, Atom + packages, iTerm2, zsh + theme
+- Install Atom + packages, iTerm2, zsh + theme, Python3, PHP
 - Install macOS services
-- Check out: [Homebrew bundle](https://github.com/Homebrew/homebrew-bundle)
