@@ -39,9 +39,5 @@ case "$(uname -s)" in
     Linux*) source "${DIR}/install_linux.sh" ;;
     Darwin*) source "${DIR}/install_mac.sh" ;;
 esac
-echo ${machine}
-
-# continue_skip_exit "Install PHP, Python?"
-# continue_skip_exit "Install Atom?"
 
 echo

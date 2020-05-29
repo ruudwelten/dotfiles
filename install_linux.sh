@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-# To Do
+# Work in progress, dealing with Mac first.
