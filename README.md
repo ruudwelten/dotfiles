@@ -1,6 +1,6 @@
 # Rudi's Dotfiles
 
-Welcome to my collection of dotfiles and scripts for customizing OS X and Linux to my liking. Right now it is still a work in progress.
+Welcome to my collection of dotfiles and scripts for customizing macOS and Linux to my liking. Right now it is still a work in progress.
 
 ## Installation
 
@@ -65,13 +65,52 @@ $ ./install.sh
     ```
   - Monokai Seti Syntax theme
 - Other atom settings:
-  ```yaml
-  "bracket-matcher":
-    autocompleteBrackets: false
-    highlightMatchingLineNumber: true
-  editor:
-    autoIndentOnPaste: false
-    showInvisibles: true
-  ```
+  - config.cson:
+    ```yaml
+    "bracket-matcher":
+      autocompleteBrackets: false
+      highlightMatchingLineNumber: true
+    editor:
+      autoIndentOnPaste: false
+      showInvisibles: true
+    ```
+  - keymap.cson:
+    ```yaml
+    'atom-text-editor':
+      'ctrl-e': 'emmet:expand-abbreviation'
+    '.platform-darwin atom-workspace':
+      'cmd-`': 'platformio-ide-terminal:toggle'
+    ```
+  - snippets.cson:
+    ```yaml
+    '.text.html.php':
+      'PHP':
+        'prefix': 'php'
+        'body': '<?php\n\t$1\n?>'
+      'PHP full':
+        'prefix': '<?php'
+        'body': '<?php\n\t$1\n?>'
+      'echo':
+        'prefix': 'echo'
+        'body': '<?= $1 ?>$2'
+      'Debug data':
+        'prefix': 'debug'
+        'body': 'echo \'<xmp>\' . print_r($1, true) . \'</xmp>\';$2'
+
+    '.html.text':
+      'HTML':
+        'prefix': 'html'
+    'body': '<!DOCTYPE html>\n<html lang="${1:en}" dir="${2:ltr}">\n\t<head>\n\t\t<meta charset="utf-8">\n\t\t<meta content="width=device-width, initial-scale=1" name="viewport">\n\t\t<title>$3</    title>\n\t</head>\n\t<body>\n\t\t$4\n\t</body>\n</html>'
+
+    '.source.php':
+      'Debug data':
+        'prefix': 'debug'
+        'body': 'echo \'<xmp>\' . print_r($1, true) . \'</xmp>\';$2'
+
+    '.source.asp':
+      'Debug data':
+        'prefix': 'debug'
+        'body': 'Response.Write("<xmp>" & $1 & "</xmp>")$2'
+    ```
 
 *\* Settings for `.atom/config.cson`*
