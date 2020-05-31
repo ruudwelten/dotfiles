@@ -35,6 +35,15 @@ function install_atom {
 
 log "Detected macOS"
 
+# Source .dotfiles/.bash_profile from ~/.bash_profile
+if ! tail -n 1 ~/.bash_profile | grep -Fxq "source ${DIR}/.bash_profile"; then
+    log "Source ${DIR}/.bash_profile from ~/.bash_profile"
+    # Remove any existing source-lines in the middle of the file
+    sed -i'.backup' '/^source \/.*\/\.bash_profile$/d' ~/.bash_profile
+    # Append source to the end of the file
+    printf "\nsource ${DIR}/.bash_profile\n" >> ~/.bash_profile
+fi
+
 continue_skip_exit "Install Homebrew and Node?"
 if [ $? = 0 ]; then
     install_homebrew
