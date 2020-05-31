@@ -7,8 +7,8 @@ Welcome to my collection of dotfiles and scripts for customizing macOS and Linux
 ```sh
 $ git clone https://github.com/ruudwelten/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
-$ chmod +x install.sh
-$ ./install.sh
+$ chmod +x .setup
+$ ./.setup
 ```
 
 ## To do
