@@ -30,9 +30,6 @@ function continue_skip_exit {
 
 
 
-#continue_skip_exit "Warning: This will overwrite your current dotfiles." "red"
-# To Do!
-
 log "Running installer"
 
 case "$(uname -s)" in
