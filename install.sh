@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 function log {
-    echo "`date '+%Y-%m-%d %H:%M:%S'`   $1" >> dotlog
+    echo "`date '+%Y-%m-%d %H:%M:%S'`   $1" >> "${DIR}/dotlog"
 }
 
 function continue_skip_exit {
