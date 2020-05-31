@@ -112,5 +112,10 @@ $ ./install.sh
         'prefix': 'debug'
         'body': 'Response.Write("<xmp>" & $1 & "</xmp>")$2'
     ```
+- GNU Stow implementation?
 
 *\* Settings for `.atom/config.cson`*
+
+## Thanks:
+
+- [Mathias Bynens](https://mathiasbynens.be/) for his excellent [dotfiles repository](https://github.com/mathiasbynens/dotfiles)
