@@ -54,10 +54,10 @@ log "Running installer"
 case "$(uname -s)" in
     Linux*)
         continue_exit "Linux detected."
-        source "${DIR}/install_linux.sh" ;;
+        source "${DIR}/.linux" ;;
     Darwin*)
         continue_exit "macOS detected."
-        source "${DIR}/install_mac.sh" ;;
+        source "${DIR}/.macos" ;;
 esac
 
 echo
