@@ -986,6 +986,18 @@ defaults write org.m0k.transmission RandomPort -bool true
 # Kill affected applications                                                  #
 ###############################################################################
 
+# Quit Moom before import
+osascript -e 'tell application "Moom" to quit'
+
+# Import Moom settings
+defaults import com.manytricks.Moom "${DIR}/init/Moom.plist"
+
+
+
+###############################################################################
+# Kill affected applications                                                  #
+###############################################################################
+
 for app in "Activity Monitor" \
     "Address Book" \
     "Alfred" \
