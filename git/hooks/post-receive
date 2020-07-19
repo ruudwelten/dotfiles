@@ -27,8 +27,24 @@ do
         git --work-tree=$BRANCH_TEMP_DIR --git-dir=$BASE/repository.git checkout $branch -f
 
         mkdir -p $BRANCH_DIR
+
+        # Set dotglob to also copy dotfiles
         shopt -s dotglob
-        mv $BRANCH_TEMP_DIR/* $BRANCH_DIR
+        
+        if [ $branch = "staging" ]; then
+            # Delete orphaned files from the staging directory
+            rsync -a --delete-after $BRANCH_TEMP_DIR/ $BRANCH_DIR/
+            #      |   └─ delete orphaned files in destination after copying
+            #      └─ archive mode
+        else
+            # Do not delete orphaned files from the production directory to
+            # allow for other contents in this directory. Need to figure out a
+            # way to prevent the production directory from filling up with junk
+            # in the future.
+            rsync -a $BRANCH_TEMP_DIR/ $BRANCH_DIR/
+        fi
+
+        # Unset dotglob
         shopt -u dotglob
         rm -rf $BRANCH_TEMP_DIR
 
