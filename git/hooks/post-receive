@@ -30,11 +30,11 @@ do
 
         # Set dotglob to also copy dotfiles
         shopt -s dotglob
-        
+
         if [ $branch = "staging" ]; then
             # Delete orphaned files from the staging directory
             rsync -a --delete-after $BRANCH_TEMP_DIR/ $BRANCH_DIR/
-            #      |   └─ delete orphaned files in destination after copying
+            #      │   └─ delete orphaned files in destination after copying
             #      └─ archive mode
         else
             # Do not delete orphaned files from the production directory to

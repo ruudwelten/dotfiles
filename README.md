@@ -1,15 +1,15 @@
 # Rudi's Dotfiles
 
-Welcome to my collection of dotfiles and scripts for customizing macOS and Linux to my liking. Right now it is still a work in progress.
+Welcome to my collection of dotfiles and scripts for customizing macOS and Linux
+to my liking. So far it contains only Mac specific code and as such it is still
+a work in progress.
 
 ## Installation
 
-```sh
-$ git clone https://github.com/ruudwelten/dotfiles.git ~/.dotfiles
-$ cd ~/.dotfiles
-$ chmod +x .setup
-$ ./.setup
-```
+    $ git clone https://github.com/ruudwelten/dotfiles.git ~/.dotfiles
+    $ cd ~/.dotfiles
+    $ chmod +x .setup
+    $ ./.setup
 
 ## To do
 
