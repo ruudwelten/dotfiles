@@ -121,4 +121,5 @@ a work in progress.
 
 ## Thanks:
 
+- [Cătălin Mariș](https://catlanmaris.com/) for his awesome [dotfiles repository](https://github.com/alrra/dotfiles)
 - [Mathias Bynens](https://mathiasbynens.be/) for his excellent [dotfiles repository](https://github.com/mathiasbynens/dotfiles)

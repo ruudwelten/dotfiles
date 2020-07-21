@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+
+enable_color_support() {
+
+    if [[ $COLORTERM == gnome-* && $TERM == xterm ]] \
+        && infocmp gnome-256color &> /dev/null; then
+        export TERM="gnome-256color"
+    elif infocmp xterm-256color &> /dev/null; then
+        export TERM="xterm-256color"
+    fi
+
+    # Load OS specific color support.
+
+    . ~/.dotfiles/.prompt_colors_macos
+
+}
+
+# [!] Don't break this function into smaller, more specialized ones
+# as you will only pollute the global space even more. This function
+# cannot be unset because it's called every time the prompt string
+# is shown.
+
+get_git_repository_details() {
+
+    local branchName=""
+    local status=""
+
+    # Check if the current directory is in a Git repository.
+
+    ! git rev-parse &>/dev/null \
+        && return
+
+    # Check if in `.git/` directory (some of the following
+    # checks don't make sense/won't work in the `.git` directory).
+
+    [ "$(git rev-parse --is-inside-git-dir)" == "true" ] \
+        && return
+
+    # Check for uncommitted changes in the index.
+
+    if ! git diff --quiet --ignore-submodules --cached; then
+        status="$status+";
+    fi
+
+    # Check for unstaged changes.
+
+    if ! git diff-files --quiet --ignore-submodules --; then
+        status="$status!";
+    fi
+
+    # Check for untracked files.
+
+    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        status="$status?";
+    fi
+
+    # Check for stashed files.
+
+    if git rev-parse --verify refs/stash &>/dev/null; then
+        status="$status$";
+    fi
+
+    # Format status
+
+    [ -n "$status" ] \
+        && status=" [$status]"
+
+    # Format branch name
+
+    branchName="$( printf "%s" "$( git rev-parse --abbrev-ref HEAD 2> /dev/null \
+        || git rev-parse --short HEAD 2> /dev/null \
+        || printf " (unknown)" )" | tr -d "\n" )"
+
+    printf "%s" "$1$branchName$status"
+
+}
+
+set_prompts() {
+
+    local bold=$(tput bold 2> /dev/null)
+    local reset=$(tput sgr0 2> /dev/null)
+
+    local cyan=""
+    local green=""
+    local orange=""
+    local white=""
+    local yellow=""
+    local violet=""
+    local gray=""
+    local blue=""
+
+    if [ "$(tput colors 2> /dev/null || printf "0")" -ge 256 ]; then
+
+        # Solarized colors, adjusted to personal preference.
+        # https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized#the-values
+
+        cyan=$(tput setaf 37)
+        green=$(tput setaf 70)
+        orange=$(tput setaf 166)
+        white=$(tput setaf 15)
+        yellow=$(tput setaf 214)
+        violet=$(tput setaf 62)
+        gray=$(tput setaf 244)
+        blue=$(tput setaf 33)
+
+    fi
+
+    # Prompt Statement variables.
+    # http://ss64.com/bash/syntax-prompt.html
+
+    # PS1 - Default interactive prompt
+
+    PS1="\[\033]0;\W\007\]" # Terminal title (set to the
+                            # current working directory)
+
+    PS1+="$reset$bold"
+    PS1+="$orange\u"        # Username
+    PS1+="$white@"
+    PS1+="$yellow\h"        # Host
+    PS1+="$white: "
+    PS1+="$green\w"         # Working directory
+    PS1+="\$(get_git_repository_details \"$white on $cyan\")"
+    PS1+="\n"
+    PS1+="\[$gray\]$\[$white\] \[$reset\]"
+
+    export PS1
+
+    # PS2 - Continuation interactive prompt
+
+    PS2="$reset$bold"
+    PS2+="$gray> $reset"
+
+    export PS2
+
+}
+
+main() {
+    enable_color_support
+    set_prompts
+}
+
+main
+
+# Cleanup.
+
+unset -f enable_color_support
+unset -f main
+unset -f set_prompts
