@@ -79,7 +79,8 @@ a work in progress.
     'atom-text-editor':
       'ctrl-e': 'emmet:expand-abbreviation'
     '.platform-darwin atom-workspace':
-      'cmd-`': 'platformio-ide-terminal:toggle'
+      'ctrl-`': 'platformio-ide-terminal:toggle'
+      'cmd-`': 'platformio-ide-terminal:focus'
     '.platform-darwin .platformio-ide-terminal .terminal':
       'cmd-c': 'platformio-ide-terminal:copy'
       'cmd-v': 'platformio-ide-terminal:paste'
