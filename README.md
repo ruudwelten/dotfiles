@@ -73,6 +73,8 @@ a work in progress.
     editor:
       autoIndentOnPaste: false
       showInvisibles: true
+    tabs:
+      enableMruTabSwitching: false
     ```
   - keymap.cson:
     ```yaml
