@@ -2,3 +2,5 @@
 export PATH=$PATH:$HOME/.dotfiles/global
 
 source ~/.dotfiles/.prompt
+
+alias gitlog='git log --oneline --decorate'
