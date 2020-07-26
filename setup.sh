@@ -1,63 +1,207 @@
 #!/usr/bin/env bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+declare -r GITHUB_REPOSITORY="ruudwelten/dotfiles"
 
-function log {
-    echo "`date '+%Y-%m-%d %H:%M:%S'`   $1" >> "${DIR}/dotlog"
+declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
+declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
+declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/os/utils.sh"
+
+declare dotfilesDirectory="$HOME/.dotfiles"
+declare skipQuestions=false
+
+download() {
+
+    local url="$1"
+    local output="$2"
+
+    if command -v "curl" &> /dev/null; then
+
+        curl -LsSo "$output" "$url" &> /dev/null
+        #     │││└─ write output to file
+        #     ││└─ show error messages
+        #     │└─ don't show the progress meter
+        #     └─ follow redirects
+
+        return $?
+
+    elif command -v "wget" &> /dev/null; then
+
+        wget -qO "$output" "$url" &> /dev/null
+        #     │└─ write output to file
+        #     └─ don't show output
+
+        return $?
+    fi
+
+    return 1
+
 }
 
-function continue_exit {
-    while true; do
-        tput bold
-        if [ "$2" = "red" ]
-        then
-            tput setaf 1
-        else
-            tput setaf 3
+download_dotfiles() {
+
+    local tmpFile=""
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    print_in_purple "\n • Download and extract archive\n\n"
+
+    tmpFile="$(mktemp /tmp/XXXXX)"
+
+    download "$DOTFILES_TARBALL_URL" "$tmpFile"
+    print_result $? "Download archive" "true"
+    printf "\n"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    if ! $skipQuestions; then
+
+        ask_for_confirmation "Do you want to store the dotfiles in '$dotfilesDirectory'?"
+
+        if ! answer_is_yes; then
+            dotfilesDirectory=""
+            while [ -z "$dotfilesDirectory" ]; do
+                ask "Please specify another location for the dotfiles (path): "
+                dotfilesDirectory="$(get_answer)"
+            done
         fi
-        echo
-        read -p "${1} Continue [Y|C] or Exit [E]?: " answer
-        tput sgr0
-        case $answer in
-            [YyCc]* ) return 0 ;;
-            [Ee]* ) exit ;;
-            * ) echo "Please answer continue [Y|C] or exit [E]." ;;
-        esac
-    done
+
+        # Ensure the `dotfiles` directory is available
+
+        while [ -e "$dotfilesDirectory" ]; do
+            ask_for_confirmation "'$dotfilesDirectory' already exists, do you want to overwrite it?"
+            if answer_is_yes; then
+                rm -rf "$dotfilesDirectory"
+                break
+            else
+                dotfilesDirectory=""
+                while [ -z "$dotfilesDirectory" ]; do
+                    ask "Please specify another location for the dotfiles (path): "
+                    dotfilesDirectory="$(get_answer)"
+                done
+            fi
+        done
+
+        printf "\n"
+
+    else
+
+        rm -rf "$dotfilesDirectory" &> /dev/null
+
+    fi
+
+    mkdir -p "$dotfilesDirectory"
+    print_result $? "Create '$dotfilesDirectory'" "true"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Extract archive in the `dotfiles` directory.
+
+    extract "$tmpFile" "$dotfilesDirectory"
+    print_result $? "Extract archive" "true"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    rm -rf "$tmpFile"
+    print_result $? "Remove archive"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    cd "$dotfilesDirectory/src/os" \
+        || return 1
+
 }
 
-function continue_skip_exit {
-    while true; do
-        tput bold
-        if [ "$2" = "red" ]
-        then
-            tput setaf 1
+download_and_source_utils() {
+
+    local tmpFile=""
+
+    tmpFile="$(mktemp /tmp/XXXXX)"
+
+    download "$DOTFILES_UTILS_URL" "$tmpFile" \
+        && . "$tmpFile" \
+        && rm -rf "$tmpFile" \
+        && return 0
+
+   return 1
+
+}
+
+verify_os() {
+
+    declare -r MINIMUM_MACOS_VERSION="10.10"
+    declare -r MINIMUM_UBUNTU_VERSION="18.04"
+
+    local os_name="$(get_os)"
+    local os_version="$(get_os_version)"
+
+    # Check if the OS is `macOS` and
+    # it's above the required version.
+
+    if [ "$os_name" == "macos" ]; then
+
+        if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
+            return 0
         else
-            tput setaf 3
+            printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
         fi
-        echo
-        read -p "${1} Continue [Y|C], Skip [N|S] or Exit [E]?: " answer
-        tput sgr0
-        case $answer in
-            [YyCc]* ) return 0 ;;
-            [NnSs]* ) return 1 ;;
-            [Ee]* ) exit ;;
-            * ) echo "Please answer continue [Y|C], skip [N|S] or exit [E]." ;;
-        esac
-    done
+
+    # Check if the OS is `Ubuntu` and
+    # it's above the required version.
+
+    elif [ "$os_name" == "ubuntu" ]; then
+
+        if is_supported_version "$os_version" "$MINIMUM_UBUNTU_VERSION"; then
+            return 0
+        else
+            printf "Sorry, this script is intended only for Ubuntu %s+" "$MINIMUM_UBUNTU_VERSION"
+        fi
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    else
+        printf "Sorry, this script is intended only for macOS and Ubuntu!"
+    fi
+
+    return 1
+
 }
 
+main() {
 
+	# Ensure that the following actions
+    # are made relative to this file's path.
 
-log "Running installer"
+    cd "$(dirname "${BASH_SOURCE[0]}")" \
+        || exit 1
 
-case "$(uname -s)" in
-    Linux*)
-        continue_exit "Linux detected."
-        source "${DIR}/.linux" ;;
-    Darwin*)
-        continue_exit "macOS detected."
-        source "${DIR}/.macos" ;;
-esac
+    # Load utils
 
-echo
+    if [ -x "os/utils.sh" ]; then
+        . "os/utils.sh" || exit 1
+    else
+        download_and_source_utils || exit 1
+    fi
+
+	# Ensure the OS is supported and
+    # it's above the required version.
+
+    verify_os \
+        || exit 1
+
+	skip_questions "$@" \
+        && skipQuestions=true
+
+	# Ask for sudo password up front.
+
+	ask_for_sudo
+
+	# Check if this script was run directly (./<path>/setup.sh),
+    # and if not, it most likely means that the dotfiles were not
+    # yet set up, and they will need to be downloaded.
+
+    printf "%s" "${BASH_SOURCE[0]}" | grep "setup.sh" &> /dev/null \
+        || download_dotfiles
+
+}
+
+main "$@"
