@@ -41,8 +41,6 @@ download_dotfiles() {
 
     local tmpFile=""
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     print_in_purple "\n • Download and extract archive\n\n"
 
     tmpFile="$(mktemp /tmp/XXXXX)"
@@ -50,8 +48,6 @@ download_dotfiles() {
     download "$DOTFILES_TARBALL_URL" "$tmpFile"
     print_result $? "Download archive" "true"
     printf "\n"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if ! $skipQuestions; then
 
@@ -66,7 +62,6 @@ download_dotfiles() {
         fi
 
         # Ensure the `dotfiles` directory is available
-
         while [ -e "$dotfilesDirectory" ]; do
             ask_for_confirmation "'$dotfilesDirectory' already exists, do you want to overwrite it?"
             if answer_is_yes; then
@@ -92,19 +87,12 @@ download_dotfiles() {
     mkdir -p "$dotfilesDirectory"
     print_result $? "Create '$dotfilesDirectory'" "true"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     # Extract archive in the `dotfiles` directory.
-
     extract "$tmpFile" "$dotfilesDirectory"
     print_result $? "Extract archive" "true"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     rm -rf "$tmpFile"
     print_result $? "Remove archive"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     cd "$dotfilesDirectory" \
         || return 1
@@ -148,9 +136,7 @@ verify_os() {
     local os_name="$(get_os)"
     local os_version="$(get_os_version)"
 
-    # Check if the OS is `macOS` and
-    # it's above the required version.
-
+    # Check if the OS is `macOS` and it's above the required version.
     if [ "$os_name" == "macos" ]; then
 
         if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
@@ -159,9 +145,7 @@ verify_os() {
             printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
         fi
 
-    # Check if the OS is `Ubuntu` and
-    # it's above the required version.
-
+    # Check if the OS is `Ubuntu` and it's above the required version.
     elif [ "$os_name" == "ubuntu" ]; then
 
         if is_supported_version "$os_version" "$MINIMUM_UBUNTU_VERSION"; then
@@ -169,8 +153,6 @@ verify_os() {
         else
             printf "Sorry, this script is intended only for Ubuntu %s+" "$MINIMUM_UBUNTU_VERSION"
         fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     else
         printf "Sorry, this script is intended only for macOS and Ubuntu!"
@@ -182,23 +164,18 @@ verify_os() {
 
 main() {
 
-	# Ensure that the following actions
-    # are made relative to this file's path.
-
+	# Ensure that the following actions are made relative to this file's path.
     cd "$(dirname "${BASH_SOURCE[0]}")" \
         || exit 1
 
     # Load utils
-
     if [ -x "os/utils.sh" ]; then
         . "os/utils.sh" || exit 1
     else
         download_and_source_utils || exit 1
     fi
 
-	# Ensure the OS is supported and
-    # it's above the required version.
-
+	# Ensure the OS is supported and it's above the required version.
     verify_os \
         || exit 1
 
@@ -206,17 +183,16 @@ main() {
         && skipQuestions=true
 
 	# Ask for sudo password up front.
-
 	ask_for_sudo
 
 	# Check if this script was run directly (./<path>/setup.sh),
     # and if not, it most likely means that the dotfiles were not
     # yet set up, and they will need to be downloaded.
-
     printf "%s" "${BASH_SOURCE[0]}" | grep "setup.sh" &> /dev/null \
         || download_dotfiles
 
-	
+    # Install applications and preferences
+    ./applications/main.sh
 
 }
 
