@@ -12,7 +12,7 @@ check out the script and when you fully understand it you can continue.
 For now there's just a macOS setup, Ubuntu will follow in the future. To set up
 these dotfiles run the following command in the terminal:
 
-    $ bash -c "$(curl -LsS https://raw.github.com/alrra/dotfiles/main/src/os/setup.sh)"
+    $ bash -c "$(curl -LsS https://raw.github.com/ruudwelten/dotfiles/master/setup.sh)"
 
 Or clone the repository first and install it from there:
 
