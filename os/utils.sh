@@ -36,10 +36,6 @@ ask_for_sudo() {
 
 }
 
-dotlog {
-    echo "`date '+%Y-%m-%d %H:%M:%S'`   $1" >> "$dotfilesDirectory/dotlog"
-}
-
 get_answer() {
     printf "%s" "$REPLY"
 }
