@@ -36,6 +36,46 @@ ask_for_sudo() {
 
 }
 
+execute() {
+
+    local -r CMDS="$1"
+    local -r MSG="${2:-$1}"
+    local -r TMP_FILE="$(mktemp /tmp/XXXXX)"
+
+    local exitCode=0
+    local cmdsPID=""
+
+    # If the current process is ended, also end all its subprocesses.
+    set_trap "EXIT" "kill_all_subprocesses"
+
+    # Execute commands in background
+    eval "$CMDS" \
+        &> /dev/null \
+        2> "$TMP_FILE" &
+
+    cmdsPID=$!
+
+    # Show a spinner if the commands require more time to complete.
+    show_spinner "$cmdsPID" "$CMDS" "$MSG"
+
+    # Wait for the commands to no longer be executing
+    # in the background, and then get their exit code.
+    wait "$cmdsPID" &> /dev/null
+    exitCode=$?
+
+    # Print output based on what happened.
+    print_result $exitCode "$MSG"
+
+    if [ $exitCode -ne 0 ]; then
+        print_error_stream < "$TMP_FILE"
+    fi
+
+    rm -rf "$TMP_FILE"
+
+    return $exitCode
+
+}
+
 get_answer() {
     printf "%s" "$REPLY"
 }
@@ -112,8 +152,26 @@ is_supported_version() {
 
 }
 
+kill_all_subprocesses() {
+
+    local i=""
+
+    for i in $(jobs -p); do
+        kill "$i"
+        wait "$i" &> /dev/null
+    done
+
+}
+
 print_error() {
     print_in_red "   [✖] $1 $2\n"
+}
+
+print_error_stream() {
+    print_in_red "       ↳ ERROR MESSAGES:\n"
+    while read -r line; do
+        print_in_red "         $line"
+    done
 }
 
 print_in_color() {
@@ -161,6 +219,57 @@ print_success() {
 
 print_warning() {
     print_in_yellow "   [!] $1\n"
+}
+
+set_trap() {
+
+    trap -p "$1" | grep "$2" &> /dev/null \
+        || trap '$2' "$1"
+
+}
+
+show_spinner() {
+
+    local -r FRAMES='/-\|'
+
+    # shellcheck disable=SC2034
+    local -r NUMBER_OR_FRAMES=${#FRAMES}
+
+    local -r CMDS="$2"
+    local -r MSG="$3"
+    local -r PID="$1"
+
+    local i=0
+    local frameText=""
+
+    # Provide more space so that the text hopefully doesn't
+    # reach the bottom line of the terminal window.
+    #
+    # This is a workaround for escape sequences not tracking
+    # the buffer position (accounting for scrolling).
+    #
+    # See also: https://unix.stackexchange.com/a/278888
+
+    printf "\n\n\n"
+    tput cuu 3  # Move up 3 lines
+
+    tput sc  # Save cursor position
+
+    # Display spinner while the commands are being executed.
+    while kill -0 "$PID" &>/dev/null; do
+
+        frameText="   [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
+
+        # Print frame text.
+        printf "%s\n" "$frameText"
+
+        sleep 0.15
+
+        # Clear frame text.
+        tput rc  # Restore cursor position to saved
+
+    done
+
 }
 
 skip_questions() {
