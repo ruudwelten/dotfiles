@@ -106,7 +106,7 @@ download_dotfiles() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    cd "$dotfilesDirectory/src/os" \
+    cd "$dotfilesDirectory" \
         || return 1
 
 }
@@ -123,6 +123,20 @@ download_and_source_utils() {
         && return 0
 
    return 1
+
+}
+
+extract() {
+
+    local archive="$1"
+    local outputDir="$2"
+
+    if command -v "tar" &> /dev/null; then
+        tar -zxf "$archive" --strip-components 1 -C "$outputDir"
+        return $?
+    fi
+
+    return 1
 
 }
 
@@ -201,6 +215,8 @@ main() {
 
     printf "%s" "${BASH_SOURCE[0]}" | grep "setup.sh" &> /dev/null \
         || download_dotfiles
+
+	
 
 }
 

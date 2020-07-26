@@ -135,6 +135,10 @@ print_in_red() {
     print_in_color "$1" 1
 }
 
+print_question() {
+    print_in_yellow "   [?] $1"
+}
+
 print_in_yellow() {
     print_in_color "$1" 3
 }
