@@ -11,7 +11,7 @@ enable_color_support() {
 
     # Load OS specific color support.
 
-    . ~/.dotfiles/.prompt_colors_macos
+    . ~/.dotfiles/shell/prompt_colors_macos
 
 }
 

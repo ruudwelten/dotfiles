@@ -194,6 +194,14 @@ main() {
     # Install applications and preferences
     ./applications/main.sh
 
+    # Source .dotfiles/shell/bash_profile from ~/.bash_profile
+    if ! tail -n 1 ~/.bash_profile | grep -Fxq "source ${dotfilesDirectory}/shell/bash_profile"; then
+        # Remove any existing source-lines in the middle of the file
+        sed -i'.backup' '/^source \/.*\/shell\/bash_profile$/d' ~/.bash_profile
+        # Append source to the end of the file
+        printf "\nsource ${dotfilesDirectory}/shell/bash_profile\n" >> ~/.bash_profile
+    fi
+
 }
 
 main "$@"
