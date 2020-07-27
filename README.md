@@ -23,9 +23,9 @@ Or clone the repository first and install it from there:
 
 ## To do
 
-- Install Python & PHP
+- Install PHP
 - Install macOS services
-- Install Atom packages
+- Install Atom package settings
   - fold-functions?
     ```yaml
     "fold-functions":
@@ -137,7 +137,6 @@ Or clone the repository first and install it from there:
         'prefix': 'debug'
         'body': 'Response.Write("<xmp>" & $1 & "</xmp>")$2'
     ```
-- GNU Stow implementation?
 
 *\* Settings for `.atom/config.cson`*
 

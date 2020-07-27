@@ -22,13 +22,17 @@ install_apm_package() {
 
 brew_install "Atom" "atom" "homebrew/cask" "cask"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 printf "\n"
 
 install_apm_package "atom-ide-ui package" "atom-ide-ui"
 install_apm_package "duplicate-line-or-selection package" "duplicate-line-or-selection"
+install_apm_package "emmet package" "emmet"
 install_apm_package "highlight-selected package" "highlight-selected"
+execute \
+    "pip install 'python-language-server[all]'" \
+    "python-language-server for ide-python package"
 install_apm_package "ide-python package" "ide-python"
 install_apm_package "less-than-slash package" "less-than-slash"
 install_apm_package "markdown-preview-plus package" "markdown-preview-plus"
@@ -36,12 +40,9 @@ install_apm_package "pigments package" "pigments"
 install_apm_package "platformio-ide-terminal package" "platformio-ide-terminal"
 install_apm_package "project-manager package" "project-manager"
 install_apm_package "split-diff package" "split-diff"
-install_apm_package "emmet package" "emmet"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 printf "\n"
 
 install_apm_package "monokai-seti syntax theme" "monokai-seti"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
