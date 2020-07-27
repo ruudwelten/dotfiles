@@ -26,7 +26,6 @@ Or clone the repository first and install it from there:
 - Install Python & PHP
 - Install macOS services
 - Install Atom packages
-  - duplicate-line-or-selection
   - fold-functions?
     ```yaml
     "fold-functions":
@@ -36,19 +35,32 @@ Or clone the repository first and install it from there:
       skipAutofoldWhenNotFirstLine: true
       skipAutofoldWhenOnlyOneFunction: true
     ```
-  - highlight-selected
-  - language-asp
-  - less-than-slash
+  - ide-python
+    ```yaml
+    "ide-python":
+      pylsPlugin:
+        autopep8:
+          enabled: false
+        flake8:
+          enabled: true
+        jedi_hover: {}
+        mccabe:
+          enabled: false
+        preload: {}
+        pycodestyle:
+          enabled: false
+        pydoctstyle:
+          enabled: true
+        pyflakes:
+          enabled: false
+    ```
   - markdown-preview-plus
     ```yaml
     "markdown-preview-plus":
       previewConfig: {}
       useGitHubStyle: true
     ```
-  - pigments
-  - project-manager
-  - split-diff
-  - platform-ide-terminal *
+  - platformio-ide-terminal *
     ```yaml
     "platformio-ide-terminal":
       ansiColors:
@@ -65,15 +77,12 @@ Or clone the repository first and install it from there:
         selectToCopy: false
         showToolbar: false
     ```
-  - todo-show
-  - emmet
 - Install Atom themes
   - One Dark UI theme *
     ```yaml
     "one-dark-ui":
       hideDockButtons: true
     ```
-  - Monokai Seti Syntax theme
 - Other atom settings:
   - config.cson:
     ```yaml

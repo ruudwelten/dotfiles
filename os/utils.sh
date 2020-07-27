@@ -176,6 +176,7 @@ print_error_stream() {
     while read -r line; do
         print_in_red "         $line"
     done
+    printf "\n"
 }
 
 print_in_color() {
@@ -288,45 +289,4 @@ skip_questions() {
 
     return 1
 
-}
-
-function continue_exit {
-    while true; do
-        tput bold
-        if [ "$2" = "red" ]
-        then
-            tput setaf 1
-        else
-            tput setaf 3
-        fi
-        echo
-        read -p "${1} Continue [Y|C] or Exit [E]?: " answer
-        tput sgr0
-        case $answer in
-            [YyCc]* ) return 0 ;;
-            [Ee]* ) exit ;;
-            * ) echo "Please answer continue [Y|C] or exit [E]." ;;
-        esac
-    done
-}
-
-function continue_skip_exit {
-    while true; do
-        tput bold
-        if [ "$2" = "red" ]
-        then
-            tput setaf 1
-        else
-            tput setaf 3
-        fi
-        echo
-        read -p "${1} Continue [Y|C], Skip [N|S] or Exit [E]?: " answer
-        tput sgr0
-        case $answer in
-            [YyCc]* ) return 0 ;;
-            [NnSs]* ) return 1 ;;
-            [Ee]* ) exit ;;
-            * ) echo "Please answer continue [Y|C], skip [N|S] or exit [E]." ;;
-        esac
-    done
 }

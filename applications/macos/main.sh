@@ -19,3 +19,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./../node.sh
 
 ./terminal.sh
+
+./atom.sh
