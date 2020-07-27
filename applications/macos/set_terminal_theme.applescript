@@ -25,6 +25,9 @@ tell application "Terminal"
     (* Get the IDs of all the currently opened terminal windows. *)
     set allOpenedWindows to id of every window
 
+    (* Wait a bit to ensure there is no script running in the window *)
+    delay 2
+
     repeat with windowID in allOpenedWindows
 
         (* Close the additional windows that were opened in order

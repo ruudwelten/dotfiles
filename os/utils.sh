@@ -36,6 +36,10 @@ ask_for_sudo() {
 
 }
 
+cmd_exists() {
+    command -v "$1" &> /dev/null
+}
+
 execute() {
 
     local -r CMDS="$1"
