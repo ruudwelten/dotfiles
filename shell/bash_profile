@@ -6,6 +6,7 @@ source_bash_files() {
 
     declare -r -a FILES_TO_SOURCE=(
         "bash_prompt"
+        "bash_functions"
         "bash.local"  # For local settings that should
                       # not be under version control.
     )
