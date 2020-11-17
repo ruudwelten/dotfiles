@@ -22,4 +22,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./../python.sh
 
 ./atom.sh
+./moom.sh
 ./quick_look.sh
