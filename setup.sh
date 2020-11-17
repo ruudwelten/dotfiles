@@ -56,6 +56,7 @@ download_dotfiles() {
         if ! answer_is_yes; then
             dotfilesDirectory=""
             while [ -z "$dotfilesDirectory" ]; do
+                #    └─ True if string is null (empty)
                 ask "Please specify another location for the dotfiles (path): "
                 dotfilesDirectory="$(get_answer)"
             done
