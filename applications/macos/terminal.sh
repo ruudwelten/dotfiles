@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && . "../../os/utils.sh"
+    && . "../../os/utils.sh" \
+    && . "./utils.sh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -27,3 +28,9 @@ execute "./set_terminal_theme.applescript" \
 #     execute "sudo sh -c 'echo \"auth sufficient pam_tid.so\" >> /etc/pam.d/sudo'" \
 #         "Use Touch ID to authenticate sudo"
 # fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Install command line tools
+
+brew_install "bat (cat clone with syntax highlighting)" "bat"
