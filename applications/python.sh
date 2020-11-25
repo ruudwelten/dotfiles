@@ -8,7 +8,7 @@ declare -r PYENV_DIRECTORY="$HOME/.pyenv"
 declare -r PYENV_GIT_REPO_URL="https://github.com/pyenv/pyenv.git"
 declare -r XXENVLATEST_GIT_REPO_URL="https://github.com/momo-lab/xxenv-latest.git"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 add_pyenv_configs() {
 
@@ -41,6 +41,7 @@ install_latest_stable_python() {
         ". $LOCAL_SHELL_CONFIG_FILE \
             && pyenv latest install" \
         "pyenv (install latest Python)"
+
 }
 
 install_pyenv() {
@@ -73,7 +74,7 @@ update_pyenv() {
 
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
 

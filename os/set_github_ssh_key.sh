@@ -8,6 +8,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 add_ssh_configs() {
 
     printf "%s\n" \
+        "Host *" \
+        "  UseKeychain yes" \
         "Host github.com" \
         "  IdentityFile $1" \
         "  LogLevel ERROR" >> ~/.ssh/config
