@@ -14,9 +14,9 @@ brew_install "Moom" "moom" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-printf "\n"
-
 defaults import com.manytricks.Moom ./preferences/Moom.plist
+
+print_success "Import settings"
 
 # To export updated settings and convert them from binary to xml:
 #     $ defaults export com.manytricks.Moom Moom.plist
