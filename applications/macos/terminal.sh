@@ -33,4 +33,6 @@ execute "./set_terminal_theme.applescript" \
 
 # Install command line tools
 
+printf "\n"
+
 brew_install "bat (cat clone with syntax highlighting)" "bat"
