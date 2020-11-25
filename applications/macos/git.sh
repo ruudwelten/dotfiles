@@ -22,6 +22,6 @@ execute \
     "git config --global user.email $(get_answer)" \
     "Set Git identity email address"
 
-execute
+execute \
     "git config --global init.defaultBranch main" \
     "Set Git default branch to 'main'"

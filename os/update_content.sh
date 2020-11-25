@@ -29,6 +29,10 @@ main() {
 
         print_result $? "Update content"
 
+        execute \
+            "git branch --set-upstream-to=origin/master" \
+            "Set local branch up to track remote branch 'master' from 'origin'"
+
     fi
 
 }
