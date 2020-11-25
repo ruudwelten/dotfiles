@@ -47,3 +47,11 @@ install_apm_package "split-diff package" "split-diff"
 printf "\n"
 
 install_apm_package "monokai-seti syntax theme" "monokai-seti"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+printf "\n"
+
+git config --global core.editor "atom --wait"
+
+print_result $? "Set Atom as Git editor"
