@@ -23,5 +23,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 ./atom.sh
 ./docker.sh
-./moom.sh
+./productivity.sh
 ./quick_look.sh

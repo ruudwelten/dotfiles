@@ -25,6 +25,10 @@ Or clone the repository first and install it from there:
 
 - Install PHP
 - Install macOS services
+- Alfred
+  - Import settings
+  - Import themes (light & dark)
+  - Install plugins
 - Install Atom package settings
   - fold-functions?
     ```yaml
