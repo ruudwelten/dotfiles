@@ -34,8 +34,8 @@ execute \
     "pip install 'python-language-server[all]'" \
     "python-language-server for ide-python package"
 install_apm_package "ide-python package" "ide-python"
-install_apm_package "Docker language" "language-docker"
-install_apm_package "AppleScript language" "language-applescript"
+install_apm_package "Docker language package" "language-docker"
+install_apm_package "AppleScript language package" "language-applescript"
 install_apm_package "less-than-slash package" "less-than-slash"
 install_apm_package "pigments package" "pigments"
 install_apm_package "platformio-ide-terminal package" "platformio-ide-terminal"
