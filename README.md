@@ -146,5 +146,5 @@ Or clone the repository first and install it from there:
 
 ## Thanks:
 
-- [Cătălin Mariș](https://catlanmaris.com/) for his awesome [dotfiles repository](https://github.com/alrra/dotfiles)
+- [Cătălin Mariș](https://catalinmaris.com/) for his awesome [dotfiles repository](https://github.com/alrra/dotfiles)
 - [Mathias Bynens](https://mathiasbynens.be/) for his excellent [dotfiles repository](https://github.com/mathiasbynens/dotfiles)
