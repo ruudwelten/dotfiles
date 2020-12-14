@@ -36,10 +36,11 @@ fi
 install_latest_stable_python() {
 
     # Install the latest stable version of Python
-    # (this will also set it as the default).
+    # and set it as the global default.
     execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv latest install" \
+            && pyenv latest install \
+            && pyenv latest global" \
         "pyenv (install latest Python)"
 
 }
