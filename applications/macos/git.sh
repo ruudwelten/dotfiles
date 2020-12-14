@@ -25,3 +25,7 @@ execute \
 execute \
     "git config --global init.defaultBranch main" \
     "Set Git default branch to 'main'"
+
+execute \
+    "git config --global pull.rebase false" \
+    "Set merge as pull method"

@@ -30,10 +30,6 @@ initialize_git_repository() {
             "git init && git remote add origin $GIT_ORIGIN" \
             "Initialize the Git repository"
 
-        execute \
-            "git config pull.rebase false" \
-            "Set merge as pull method"
-
     fi
 
 }
