@@ -23,7 +23,6 @@ Or clone the repository first and install it from there:
 
 ## To do
 
-- Install PHP
 - Install macOS services
 - Alfred
   - Import settings
