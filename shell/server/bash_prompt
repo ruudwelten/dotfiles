@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+get_git_repository_details() {
+
+    local branchName=""
+    local status=""
+
+    # Check if the current directory is in a Git repository.
+
+    ! git rev-parse &>/dev/null \
+        && return
+
+    # Check if in `.git/` directory (some of the following
+    # checks don't make sense/won't work in the `.git` directory).
+
+    [ "$(git rev-parse --is-inside-git-dir)" == "true" ] \
+        && return
+
+    # Check for uncommitted changes in the index.
+
+    if ! git diff --quiet --ignore-submodules --cached; then
+        status="$status+";
+    fi
+
+    # Check for unstaged changes.
+
+    if ! git diff-files --quiet --ignore-submodules --; then
+        status="$status!";
+    fi
+
+    # Check for untracked files.
+
+    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        status="$status?";
+    fi
+
+    # Check for stashed files.
+
+    if git rev-parse --verify refs/stash &>/dev/null; then
+        status="$status$";
+    fi
+
+    # Format status
+
+    [ -n "$status" ] \
+        && status=" [$status]"
+
+    # Format branch name
+
+    branchName="$( printf "%s" "$( git rev-parse --abbrev-ref HEAD 2> /dev/null \
+        || git rev-parse --short HEAD 2> /dev/null \
+        || printf " (unknown)" )" | tr -d "\n" )"
+
+    printf "%s" "$1$branchName$status"
+
+}
+
+set_prompts() {
+
+    local reset="\e[0m"
+
+    local red="\e[1;31m"
+    local white="\e[1;97m"
+    local gray="\e[1;90m"
+
+    # PS1 - Default interactive prompt
+
+    PS1="\[\033]0;\W\007\]\n$reset$red\u$white@$red\h$white: $red\w\$(get_git_repository_details \"$white on $red\")\n\[$gray\]$\[$white\] \[$reset\]"
+
+    export PS1
+
+    # PS2 - Continuation interactive prompt
+
+    PS2="$gray> $white$reset"
+
+    export PS2
+
+}
+
+main() {
+    set_prompts
+}
+
+main
+
+# Cleanup.
+
+unset -f main
+unset -f set_prompts
