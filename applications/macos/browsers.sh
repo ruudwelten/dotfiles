@@ -10,6 +10,8 @@ print_in_purple "\n   Browsers\n"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+printf "\n"
+
 brew_install "Brave" "brave-browser" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
