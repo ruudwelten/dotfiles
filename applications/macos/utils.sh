@@ -38,12 +38,18 @@ brew_install() {
 
     # Install the specified formula.
 
+    if [ "$CMD" == "cask" ]; then
+        CMD_FULL="--cask"
+    else
+        CMD_FULL="$CMD"
+    fi
+
     # shellcheck disable=SC2086
-    if brew $CMD list "$FORMULA" &> /dev/null; then
+    if brew list $CMD_FULL "$FORMULA" &> /dev/null; then
         print_success "$FORMULA_READABLE_NAME"
     else
         execute \
-            "brew $CMD install $FORMULA $CMD_ARGUMENTS" \
+            "brew install $CMD_FULL $FORMULA $CMD_ARGUMENTS" \
             "$FORMULA_READABLE_NAME"
     fi
 
