@@ -22,8 +22,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./php.sh
 ./../python.sh
 
-./atom.sh
 ./browsers.sh
 ./docker.sh
 ./productivity.sh
 ./quick_look.sh
+./vscode.sh

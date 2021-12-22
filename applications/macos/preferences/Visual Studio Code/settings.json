@@ -1,0 +1,39 @@
+{
+    "atomKeymap.promptV3Features": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.lineHeight": 20,
+    "editor.fontFamily": " 'Cascadia Code', Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.rulers": [
+        80
+    ],
+    "editor.scrollBeyondLastLine": false,
+    "editor.stickyTabStops": true,
+    "explorer.confirmDelete": false,
+    "files.associations": {
+        "*.ndjson": "json",
+        "*.scss": "scss"
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+    "markdown.extension.preview.autoShowPreviewToSide": true,
+    "markdown.extension.print.absoluteImgPath": false,
+    "phpcs.executablePath": "/Users/ruudwelten/.composer/vendor/squizlabs/php_codesniffer/bin/phpcs",
+    "phpcs.showSources": true,
+    "phpcs.standard": "PSR12",
+    "redhat.telemetry.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.lineHeight": 1.4,
+    "workbench.startupEditor": "readme",
+    "workbench.colorTheme": "One Monokai",
+    "workbench.iconTheme": "Monokai Pro Icons"
+}

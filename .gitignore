@@ -1,9 +1,9 @@
 *.cache
-atom/.apm
-atom/packages
-atom/storage
-atom/blob-store
 .DS_Store
+
+# Editors
+.vscode
+.idea
 
 # Log file
 dotlog
