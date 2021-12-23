@@ -18,8 +18,7 @@ Or clone the repository first and install it from there:
 
     $ git clone https://github.com/ruudwelten/dotfiles.git ~/.dotfiles
     $ cd ~/.dotfiles
-    $ chmod +x .setup
-    $ ./.setup
+    $ ./setup.sh
 
 ## Thanks:
 
