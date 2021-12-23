@@ -26,14 +26,15 @@ brew_install "Visual Studio Code" "visual-studio-code" "homebrew/cask" "cask"
 
 printf "\n"
 
-if [ ! -L ~/Library/Application\ Support/Code/User/settings.json ]; then
-    ln -s preferences/Visual\ Studio\ Code/settings.json ~/Library/Application\ Support/Code/User/settings.json
+# TODO: Option to overwrite settings after prompt
+if [ ! -f ~/Library/Application\ Support/Code/User/settings.json ]; then
+    cp preferences/Visual\ Studio\ Code/settings.json ~/Library/Application\ Support/Code/User/
 fi
-if [ ! -L ~/Library/Application\ Support/Code/User/keybindings.json ]; then
-    ln -s preferences/Visual\ Studio\ Code/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+if [ ! -f ~/Library/Application\ Support/Code/User/keybindings.json ]; then
+    cp preferences/Visual\ Studio\ Code/keybindings.json ~/Library/Application\ Support/Code/User/
 fi
 
-print_result $? "Symlink VSCode settings and key bindings"
+print_result $? "Copy VSCode settings and key bindings"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
