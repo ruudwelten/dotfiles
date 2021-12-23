@@ -23,7 +23,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./../python.sh
 
 ./browsers.sh
-./docker.sh
+./development.sh
 ./productivity.sh
 ./quick_look.sh
 ./security.sh
