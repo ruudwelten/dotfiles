@@ -22,6 +22,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./php.sh
 ./../python.sh
 
+./1password.sh
 ./browsers.sh
 ./docker.sh
 ./productivity.sh
