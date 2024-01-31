@@ -1,0 +1,11 @@
+#!/bin/bash
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias cd..="cd .."
+
+alias dev="cd ~/Development"
+alias dot="cd ~/.dotfiles"
+
+alias tim="~/.tim/tim.py"
