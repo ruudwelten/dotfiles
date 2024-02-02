@@ -27,7 +27,7 @@ brew_install() {
     # If `brew tap` needs to be executed,
     # check if it executed correctly.
 
-    if [ -n "$TAP_VALUE" ]; then
+    if [ -n "$TAP_VALUE" ] && [ "$TAP_VALUE" != "homebrew/cask" ]; then
         if ! brew_tap "$TAP_VALUE"; then
             print_error "$FORMULA_READABLE_NAME ('brew tap $TAP_VALUE' failed)"
             return 1
