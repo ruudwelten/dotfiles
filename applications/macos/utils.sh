@@ -13,7 +13,7 @@ brew_install() {
     declare -r FORMULA_READABLE_NAME="$1"
     declare -r TAP_VALUE="$3"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Check if `Homebrew` is installed.
 
@@ -22,7 +22,7 @@ brew_install() {
         return 1
     fi
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # If `brew tap` needs to be executed,
     # check if it executed correctly.
@@ -34,7 +34,7 @@ brew_install() {
         fi
     fi
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Install the specified formula.
 
@@ -59,7 +59,7 @@ brew_prefix() {
 
     local path=""
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if path="$(brew --prefix 2> /dev/null)"; then
         printf "%s" "$path"

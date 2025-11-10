@@ -51,4 +51,3 @@ brew_install "Edge" "microsoft-edge" "homebrew/cask" "cask"
 printf "\n"
 
 brew_install "Browserosaurus" "browserosaurus" "homebrew/cask" "cask"
-
