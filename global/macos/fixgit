@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Working with git repositories over the network on macOS an error could
 # appear as follows: "fatal: Could not write new index file." If this happens
