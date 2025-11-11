@@ -27,4 +27,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./productivity.sh
 ./quick_look.sh
 ./security.sh
+./utilities.sh
 ./vscode.sh
