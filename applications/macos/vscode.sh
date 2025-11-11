@@ -6,10 +6,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "\n   Visual Studio Code\n\n"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 install_vscode_extension() {
 
     execute \
@@ -20,52 +16,73 @@ install_vscode_extension() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-brew_install "Visual Studio Code" "visual-studio-code" "homebrew/cask" "cask"
+install_vscode() {
+
+    brew_install "Visual Studio Code" "visual-studio-code" "homebrew/cask" "cask"
+
+}
+
+install_vscode_extensions() {
+
+    printf "\n"
+
+    install_vscode_extension "Atom Keymap package" "ms-vscode.atom-keybindings"
+    install_vscode_extension "DotENV package" "mikestead.dotenv"
+    install_vscode_extension "EditorConfig package" "EditorConfig.EditorConfig"
+    install_vscode_extension "HTML CSS Support package" "ecmel.vscode-html-css"
+    install_vscode_extension "Markdown All in One package" "yzhang.markdown-all-in-one"
+    install_vscode_extension "PHP Intelephense package" "bmewburn.vscode-intelephense-client"
+    install_vscode_extension "Pylance package" "ms-python.vscode-pylance"
+    install_vscode_extension "Python package" "ms-python.python"
+    install_vscode_extension "Red Hat Commons package" "redhat.vscode-commons"
+    install_vscode_extension "SQLite package" "alexcvzz.vscode-sqlite"
+    install_vscode_extension "YAML package" "redhat.vscode-yaml"
+    install_vscode_extension "XML package" "redhat.vscode-xml"
+
+}
+
+install_vscode_themes() {
+
+    printf "\n"
+
+    install_vscode_extension "CodeSandbox Black theme" "ziterz.codesandbox-black-theme"
+    install_vscode_extension "Dracula theme" "dracula-theme.theme-dracula"
+    install_vscode_extension "One Monokai theme" "azemoh.one-monokai"
+    install_vscode_extension "Plastic theme" "will-stone.plastic"
+
+}
+
+copy_vscode_settings() {
+
+    printf "\n"
+
+    local CONFIG_DIR="$HOME/.temp"
+
+    # TODO: Option to overwrite settings after prompt
+    if [[ ! -f "$CONFIG_DIR/settings.json" ]]; then
+        execute \
+            "cp preferences/Visual\ Studio\ Code/settings.json $CONFIG_DIR/" \
+            "Copy VSCode settings"
+    fi
+    if [[ ! -f "$CONFIG_DIR/keybindings.json" ]]; then
+        execute \
+            "cp preferences/Visual\ Studio\ Code/keybindings.json $CONFIG_DIR/" \
+            "Copy VSCode key bindings"
+    fi
+
+}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-printf "\n"
+main() {
 
-# TODO: Option to overwrite settings after prompt
-if [ ! -f ~/Library/Application\ Support/Code/User/settings.json ]; then
-    cp preferences/Visual\ Studio\ Code/settings.json ~/Library/Application\ Support/Code/User/
-fi
-if [ ! -f ~/Library/Application\ Support/Code/User/keybindings.json ]; then
-    cp preferences/Visual\ Studio\ Code/keybindings.json ~/Library/Application\ Support/Code/User/
-fi
+    print_in_purple "\n   Visual Studio Code\n\n"
 
-print_result $? "Copy VSCode settings and key bindings"
+    install_vscode
+    install_vscode_extensions
+    install_vscode_themes
+    copy_vscode_settings
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+}
 
-printf "\n"
-
-install_vscode_extension "Atom Keymap package" "ms-vscode.atom-keybindings"
-install_vscode_extension "DotENV package" "mikestead.dotenv"
-install_vscode_extension "EditorConfig package" "EditorConfig.EditorConfig"
-install_vscode_extension "HTML CSS Support package" "ecmel.vscode-html-css"
-install_vscode_extension "Markdown All in One package" "yzhang.markdown-all-in-one"
-install_vscode_extension "PHP Intelephense package" "bmewburn.vscode-intelephense-client"
-install_vscode_extension "Pylance package" "ms-python.vscode-pylance"
-install_vscode_extension "Python package" "ms-python.python"
-install_vscode_extension "Red Hat Commons package" "redhat.vscode-commons"
-install_vscode_extension "SQLite package" "alexcvzz.vscode-sqlite"
-install_vscode_extension "YAML package" "redhat.vscode-yaml"
-install_vscode_extension "XML package" "redhat.vscode-xml"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
-
-install_vscode_extension "CodeSandbox Black theme" "ziterz.codesandbox-black-theme"
-install_vscode_extension "Dracula theme" "dracula-theme.theme-dracula"
-install_vscode_extension "One Monokai theme" "azemoh.one-monokai"
-install_vscode_extension "Plastic theme" "will-stone.plastic"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
-
-git config --global core.editor "code --wait"
-
-print_result $? "Set VSCode as Git editor"
+main

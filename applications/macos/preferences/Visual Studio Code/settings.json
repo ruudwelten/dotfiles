@@ -1,23 +1,38 @@
 {
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": "active",
-    "editor.fontFamily": "'Cascadia Code', Monaco, 'Courier New', monospace",
-    "editor.fontLigatures": true,
-    "editor.lineHeight": 20,
-    "editor.minimap.enabled": false,
-    "editor.scrollBeyondLastLine": false,
-    "editor.stickyTabStops": true,
-    "explorer.confirmDelete": false,
-    "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true,
-    "[markdown]": {
-        "files.trimTrailingWhitespace": false
-    },
-    "redhat.telemetry.enabled": false,
-    "security.workspace.trust.untrustedFiles": "open",
-    "terminal.integrated.lineHeight": 1.4,
-    "workbench.startupEditor": "readme",
-    "workbench.colorTheme": "Plastic",
-    "workbench.iconTheme": "Monokai Pro Icons"
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.fontFamily": "'Cascadia Code', Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": false,
+  "editor.lineHeight": 20,
+  "editor.minimap.enabled": false,
+  "editor.rulers": [80, 120],
+  "editor.scrollBeyondLastLine": false,
+  "editor.stickyTabStops": true,
+  "explorer.confirmDelete": false,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "redhat.telemetry.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.lineHeight": 1.4,
+  "workbench.colorTheme": "Plastic",
+  "workbench.iconTheme": "Monokai Pro Icons",
+  "workbench.preferredLightColorTheme": "Prism",
+  "workbench.preferredDarkColorTheme": "Plastic",
+  "workbench.startupEditor": "readme",
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "[python]": {
+    "editor.rulers": [79, 120],
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[git-commit]": {
+    "editor.rulers": [50, 70]
+  },
+  "[sql]": {
+    "editor.rulers": [140]
+  }
 }
