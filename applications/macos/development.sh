@@ -11,4 +11,3 @@ print_in_purple "\n   Development\n\n"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 brew_install "Docker" "docker" "homebrew/cask" "cask"
-brew_install "TablePlus" "tableplus" "homebrew/cask" "cask"

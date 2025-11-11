@@ -13,7 +13,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ./xcode.sh
-./homebrew.sh
+./package_managers.sh
 ./bash.sh
 ./git.sh
 ./../node.sh

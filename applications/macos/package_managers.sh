@@ -51,6 +51,13 @@ opt_out_of_analytics() {
 
 }
 
+install_setapp() {
+
+    brew_install "SetApp" "setapp" "homebrew/cask" "cask"
+    print_warning "Install SetApp apps manually: TablePlus"
+
+}
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
@@ -62,6 +69,8 @@ main() {
 
     brew_update
     brew_upgrade
+
+    install_setapp
 
 }
 

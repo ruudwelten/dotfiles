@@ -7,11 +7,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 brew_install() {
 
+    declare -r FORMULA_READABLE_NAME="$1"
+    declare -r FORMULA="$2"
+    declare -r TAP_VALUE="$3"
     declare -r CMD="$4"
     declare -r CMD_ARGUMENTS="$5"
-    declare -r FORMULA="$2"
-    declare -r FORMULA_READABLE_NAME="$1"
-    declare -r TAP_VALUE="$3"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
