@@ -37,11 +37,30 @@ install_latest_stable_python() {
 
     # Install the latest stable version of Python
     # and set it as the global default.
-    execute \
-        ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv latest install \
-            && pyenv latest global" \
-        "pyenv (install latest Python)"
+
+    local LATEST_VERSION=$(pyenv install --list | grep -E '^\s+3\.[0-9]+\.[0-9]+$' | sort -Vr | head -1 | xargs)
+    local LATEST_VERSION_INSTALLED=$(pyenv versions | grep -E "^\*?\s+$LATEST_VERSION(\s\(.*\))?$")
+    local LATEST_VERSION_ACTIVE=$(pyenv version | grep -E "^$LATEST_VERSION(\s\(.*\))?$")
+
+    if [[ ! $LATEST_VERSION_INSTALLED ]]; then
+        execute \
+            ". $LOCAL_SHELL_CONFIG_FILE \
+                && pyenv install $LATEST_VERSION" \
+            "pyenv (install latest Python - $LATEST_VERSION)"
+    else
+        print_info "Latest Python version ($LATEST_VERSION) is already installed"
+    fi
+
+    if [[ ! $LATEST_VERSION_ACTIVE ]]; then
+        ask_for_confirmation "The latest Python version is not the active version, would you like to configure this globally?"
+        if answer_is_yes; then
+
+            pyenv global $LATEST_VERSION
+
+        fi
+    else
+        print_info "Latest Python version ($LATEST_VERSION) is globally active"
+    fi
 
 }
 
