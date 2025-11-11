@@ -26,4 +26,4 @@ print_success "Import Moom settings"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-brew_install "Notion" "notion" "homebrew/cask" "cask"
+brew_install "Logseq" "logseq" "homebrew/cask" "cask"
