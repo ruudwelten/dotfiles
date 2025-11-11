@@ -32,13 +32,13 @@ brew_install "Chromium" "chromium" "homebrew/cask" "cask"
 printf "\n"
 
 brew_install "Firefox" "firefox" "homebrew/cask" "cask"
-brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-versions" "cask"
+brew_install "Firefox Developer" "firefox@developer-edition" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 printf "\n"
 
-brew_install "Safari Technology Preview" "safari-technology-preview" "homebrew/cask-versions" "cask"
+brew_install "Safari Technology Preview" "safari-technology-preview" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
