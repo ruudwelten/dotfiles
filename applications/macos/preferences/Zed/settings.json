@@ -11,6 +11,7 @@
   "auto_install_extensions": {
     "colorizer": true,
     "dockerfile": true,
+    "git-firefly": true,
     "html": true,
     "material-icon-theme": true,
     "php": true,
