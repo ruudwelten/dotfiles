@@ -29,3 +29,4 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./security.sh
 ./utilities.sh
 ./vscode.sh
+./zed.sh

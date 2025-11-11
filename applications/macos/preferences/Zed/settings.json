@@ -1,0 +1,89 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "auto_indent_on_paste": false,
+  "auto_install_extensions": {
+    "colorizer": true,
+    "dockerfile": true,
+    "html": true,
+    "material-icon-theme": true,
+    "php": true,
+    "python": true,
+    "toml": true,
+    "vue": true
+  },
+  "base_keymap": "Atom",
+  "buffer_font_fallbacks": ["Monaco", "Courier New", "monospace"],
+  "buffer_font_family": "Cascadia Code",
+  "buffer_font_size": 15,
+  "ensure_final_newline_on_save": true,
+  "file_types": {
+    "sql": ["*.sql"]
+  },
+  "hard_tabs": false,
+  "icon_theme": "Material Icon Theme",
+  "languages": {
+    "Dockerfile": {
+      "wrap_guides": []
+    },
+    "Git Commit": {
+      "wrap_guides": [50, 70]
+    },
+    "JSON": {
+      "wrap_guides": []
+    },
+    "JSONC": {
+      "wrap_guides": []
+    },
+    "Markdown": {
+      "remove_trailing_whitespace_on_save": false,
+      "tab_size": 4
+    },
+    "Python": {
+      "tab_size": 4,
+      "wrap_guides": [79]
+    },
+    "TOML": {
+      "wrap_guides": []
+    },
+    "YAML": {
+      "wrap_guides": []
+    }
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "remove_trailing_whitespace_on_save": true,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "terminal": {
+    "line_height": {
+      "custom": 1.4
+    }
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "Colorizer Pro"
+  },
+  "theme_overrides": {
+    "Colorizer Pro": {
+      "editor.subheader.background": "#08090a99",
+      "syntax": {
+        "property": {
+          "color": "#5fd8ae"
+        }
+      }
+    }
+  },
+  "ui_font_size": 16,
+  "wrap_guides": [80, 120]
+}
