@@ -73,7 +73,16 @@ update_nvm() {
 
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+install_or_update_yarn() {
+
+    # Install the latest stable version of Yarn
+    execute \
+        "npm install --global --silent yarn" \
+        "Yarn"
+
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
 
@@ -88,6 +97,8 @@ main() {
     install_latest_stable_node
 
     install_npm_package "npm (update)" "npm"
+
+    install_or_update_yarn
 
 }
 
