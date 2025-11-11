@@ -30,6 +30,10 @@ initialize_git_repository() {
             "git init && git remote add origin $GIT_ORIGIN" \
             "Initialize the Git repository"
 
+    else
+
+        print_info "Directory is already a Git repository"
+
     fi
 
 }
@@ -37,8 +41,11 @@ initialize_git_repository() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
+
     print_in_purple "\n • Initialize Git repository\n\n"
+
     initialize_git_repository "$1"
+
 }
 
 main "$1"

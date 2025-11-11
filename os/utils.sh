@@ -198,16 +198,19 @@ print_in_red() {
     print_in_color "$1" 1
 }
 
-print_question() {
-    print_in_yellow "   [?] $1"
-}
-
 print_in_yellow() {
     print_in_color "$1" 3
 }
 
-print_result() {
+print_in_blue() {
+    print_in_color "$1" 4
+}
 
+print_question() {
+    print_in_yellow "   [?] $1"
+}
+
+print_result() {
     if [ "$1" -eq 0 ]; then
         print_success "$2"
     else
@@ -219,11 +222,14 @@ print_result() {
     fi
 
     return "$1"
-
 }
 
 print_success() {
     print_in_green "   [✔] $1\n"
+}
+
+print_info() {
+    print_in_blue "   [i] $1\n"
 }
 
 print_warning() {

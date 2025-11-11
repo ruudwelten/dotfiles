@@ -27,7 +27,7 @@ if [ ! -z "$GIT_SUPPLIED_USERNAME" ]; then
         "git config --global user.name $GIT_SUPPLIED_USERNAME" \
         "Set Git identity name"
 elif [ ! -z "$GIT_USERNAME" ]; then
-    print_success "Skipping, name remains as $GIT_USERNAME"
+    print_info "Skipping, name remains as $GIT_USERNAME"
 else
     print_error "No name provided"
 fi
@@ -47,7 +47,7 @@ if [ ! -z "$GIT_SUPPLIED_USEREMAIL" ]; then
         "git config --global user.email $GIT_SUPPLIED_USEREMAIL" \
         "Set Git identity email address"
 elif [ ! -z "$GIT_USEREMAIL" ]; then
-    print_success "Skipping, email address remains as $GIT_USEREMAIL"
+    print_info "Skipping, email address remains as $GIT_USEREMAIL"
 else
     print_error "No email address provided"
 fi
