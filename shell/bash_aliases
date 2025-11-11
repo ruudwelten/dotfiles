@@ -10,3 +10,4 @@ alias dot="cd ~/.dotfiles"
 
 alias tim="~/.tim/tim.py"
 alias act="[[ -f \"venv/bin/activate\" ]] && source venv/bin/activate && print_in_green \"Activating virtual environment in \\\`venv\\\`\\n\\n\" || [[ -f \".venv/bin/activate\" ]] && source .venv/bin/activate && print_in_green \"Activating virtual environment in \\\`.venv\\\`\\n\\n\" || print_in_red \"Your virtual environment can not be found.\\n\\n\""
+alias ip="curl icanhazip.com"
