@@ -211,7 +211,11 @@ print_result() {
     if [ "$1" -eq 0 ]; then
         print_success "$2"
     else
-        print_error "$2"
+        if [ -n "$3" ]; then
+            print_error "$3"
+        else
+            print_error "$2"
+        fi
     fi
 
     return "$1"
