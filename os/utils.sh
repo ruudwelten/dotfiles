@@ -6,6 +6,12 @@ answer_is_yes() {
         || return 1
 }
 
+answer_is_no() {
+    [[ "$REPLY" =~ ^[Nn]$ ]] \
+        && return 0 \
+        || return 1
+}
+
 ask() {
     print_question "$1"
     read -r

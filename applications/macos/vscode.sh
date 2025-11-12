@@ -52,22 +52,44 @@ install_vscode_themes() {
 
 }
 
-copy_vscode_settings() {
+ask_for_overwrite_or_diff() {
+
+    ask "VSCode $NAME file already exists, would you like to overwrite this [y] or view the diff [d]? (y/n/d) "
+    answer_is_yes && return 0
+    answer_is_no && return 1
 
     printf "\n"
+    [[ "$REPLY" =~ ^[Dd]$ ]] && git diff --color=always $2 $1 | sed 's/^/       /'
+    printf "\n\n"
 
-    local CONFIG_DIR="$HOME/.temp"
+    ask "Would you like to overwrite this file? (y/n) "
+    answer_is_yes && return 0 || return 1
 
-    # TODO: Option to overwrite settings after prompt
-    if [[ ! -f "$CONFIG_DIR/settings.json" ]]; then
-        execute \
-            "cp preferences/Visual\ Studio\ Code/settings.json $CONFIG_DIR/" \
-            "Copy VSCode settings"
+}
+
+copy_vscode_config() {
+
+    local FILE=$1
+    local NAME=$2
+
+    local CONFIG_DIR="$HOME/.temp" # "$HOME/Library/Application\ Support/Code/User"
+    local SOURCE="preferences/VSCode/$FILE"
+    local DEST="$CONFIG_DIR/$FILE"
+
+    # If file does not exist, copy the file and return
+    if [[ ! -f "$CONFIG_DIR/$FILE" ]]; then
+        execute "cp $SOURCE $CONFIG_DIR" "Copy VSCode $NAME"
+        return
     fi
-    if [[ ! -f "$CONFIG_DIR/keybindings.json" ]]; then
-        execute \
-            "cp preferences/Visual\ Studio\ Code/keybindings.json $CONFIG_DIR/" \
-            "Copy VSCode key bindings"
+
+    if $(git diff --quiet $DEST $SOURCE) 2>/dev/null; then
+        # Files are equal, return
+        print_info "Existing $NAME is the same as $FILE"
+        return
+    else
+        # Files are different, ask for overwrite or diff
+        ask_for_overwrite_or_diff $SOURCE $DEST $CONFIG_DIR && \
+            execute "cp $SOURCE $CONFIG_DIR" "Copy VSCode $NAME" && return
     fi
 
 }
@@ -81,7 +103,9 @@ main() {
     install_vscode
     install_vscode_extensions
     install_vscode_themes
-    copy_vscode_settings
+    printf "\n"
+    copy_vscode_config "settings.json" "settings"
+    copy_vscode_config "keybindings.json" "key bindings"
 
 }
 
