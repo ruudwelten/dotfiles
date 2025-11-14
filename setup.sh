@@ -194,6 +194,8 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    ./os/create_directories.sh
+
     ./os/create_symbolic_links.sh "$@"
 
     ./os/create_local_config_files.sh
