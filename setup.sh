@@ -131,7 +131,8 @@ extract() {
 
 verify_os() {
 
-    declare -r MINIMUM_MACOS_VERSION="10.10"
+    declare -r MINIMUM_MACOS_VERSION="14.0"
+    declare -r MINIMUM_FEDORA_VERSION="45"
     declare -r MINIMUM_UBUNTU_VERSION="18.04"
 
     local os_name="$(get_os)"
@@ -145,6 +146,16 @@ verify_os() {
         else
             printf "\n"
             print_error "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
+        fi
+
+    # Check if the OS is `Fedora` and it's above the required version.
+    elif [ "$os_name" == "fedora" ]; then
+
+        if is_supported_version "$os_version" "$MINIMUM_FEDORA_VERSION"; then
+            return 0
+        else
+            printf "\n"
+            print_error "Sorry, this script is intended only for Fedora %s+" "$MINIMUM_FEDORA_VERSION"
         fi
 
     # Check if the OS is `Ubuntu` and it's above the required version.
