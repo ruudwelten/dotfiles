@@ -174,7 +174,7 @@ kill_all_subprocesses() {
 }
 
 print_error() {
-    print_in_red "   [✖] $1 $2\n"
+    print_in_red "   [✖] $1${2:+ $2}\n"
 }
 
 print_error_stream() {
