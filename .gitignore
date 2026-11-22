@@ -7,3 +7,6 @@
 
 # Log file
 dotlog
+
+# Temporary files
+.tmp/
