@@ -12,12 +12,6 @@ print_in_purple "\n   Browsers\n"
 
 printf "\n"
 
-brew_install "Arc" "arc" "homebrew/cask" "cask"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
-
 brew_install "Brave" "brave-browser" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -26,6 +20,12 @@ printf "\n"
 
 brew_install "Chrome" "google-chrome" "homebrew/cask" "cask"
 brew_install "Chromium" "chromium" "homebrew/cask" "cask"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+printf "\n"
+
+brew_install "Edge" "microsoft-edge" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -44,7 +44,7 @@ brew_install "Safari Technology Preview" "safari-technology-preview" "homebrew/c
 
 printf "\n"
 
-brew_install "Edge" "microsoft-edge" "homebrew/cask" "cask"
+brew_install "Zen" "zen" "homebrew/cask" "cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
