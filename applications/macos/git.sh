@@ -14,9 +14,7 @@ brew_install "Git" "git"
 
 GIT_USERNAME=$(git config --global user.name)
 
-if [ $? -ne 1 ]; then
-    GIT_USERNAME=" [$GIT_USERNAME]"
-fi
+[ $? -ne 1 ] && GIT_USERNAME=" [$GIT_USERNAME]"
 
 ask "Please provide your name for your Git identity$GIT_USERNAME: "
 
@@ -34,9 +32,7 @@ fi
 
 GIT_USEREMAIL=$(git config --global user.email)
 
-if [ $? -ne 1 ]; then
-    GIT_USEREMAIL=" [$GIT_USEREMAIL]"
-fi
+[ $? -ne 1 ] && GIT_USEREMAIL=" [$GIT_USEREMAIL]"
 
 ask "Please provide an email address for your Git identity$GIT_USEREMAIL: "
 
