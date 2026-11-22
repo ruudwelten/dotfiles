@@ -50,4 +50,4 @@ brew_install "Zen" "zen" "homebrew/cask" "cask"
 
 printf "\n"
 
-brew_install "Browserosaurus" "browserosaurus" "homebrew/cask" "cask"
+brew_install "Browserino" "browserino" "AlexStrNik/Browserino" "cask"
