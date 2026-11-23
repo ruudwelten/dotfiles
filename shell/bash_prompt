@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ -z "$PS1" ]] && return
+
 enable_color_support() {
 
     if [[ $COLORTERM == gnome-* && $TERM == xterm ]] \
@@ -11,7 +13,7 @@ enable_color_support() {
 
     # Load OS specific color support.
 
-    . "bash_colors_$OS"
+    [[ -f "bash_colors_$OS" ]] && . "bash_colors_$OS"
 
 }
 
