@@ -93,6 +93,7 @@ execute() {
 
     local -r CMDS="$1"
     local -r MSG="${2:-$1}"
+    local -r OK_CODES="${3:-0}"  # Space separated exit codes treated as success
     local -r TMP_FILE="$(mktemp /tmp/XXXXX)"
 
     local exitCode=0
@@ -116,10 +117,17 @@ execute() {
     wait "$cmdsPID" &> /dev/null
     exitCode=$?
 
-    # Print output based on what happened.
-    print_result $exitCode "$MSG"
+    # Treat any of the accepted exit codes as success.
+    if [[ " 0 $OK_CODES " == *" $exitCode "* ]]; then
+        successCode=0
+    else
+        successCode=$exitCode
+    fi
 
-    if [ $exitCode -ne 0 ]; then
+    # Print output based on what happened.
+    print_result $successCode "$MSG"
+
+    if [ $successCode -ne 0 ]; then
         print_error_stream < "$TMP_FILE"
     fi
 
