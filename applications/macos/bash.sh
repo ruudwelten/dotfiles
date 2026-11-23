@@ -32,13 +32,13 @@ export PATH
 
     newShellPath="$brewPrefix/bin/bash" \
 
-    # Add the path of the `Bash` version installed through `Homebrew`
-    # to the list of login shells from the `/etc/shells` file.
+    # Add the path of the `Bash` version installed through `Homebrew` to the
+    # list of login shells from the `/etc/shells` file.
     #
-    # This needs to be done because applications use this file to
-    # determine whether a shell is valid (e.g.: `chsh` consults the
-    # `/etc/shells` to determine whether an unprivileged user may
-    # change the login shell for her own account).
+    # This needs to be done because applications use this file to determine
+    # whether a shell is valid (e.g.: `chsh` consults the `/etc/shells` to
+    # determine whether an unprivileged user may change the login shell for her
+    # own account).
     #
     # http://www.linuxfromscratch.org/blfs/view/7.4/postlfs/etcshells.html
 
@@ -50,12 +50,11 @@ export PATH
     fi
 
     # Set latest version of `Bash` as the default
-    # (macOS uses by default an older version of `Bash`).
+    # (macOS uses an older version of `Bash` by default).
     chsh -s "$newShellPath" &> /dev/null
     print_result $? "Bash (use latest version)"
 
-    # If needed, add the necessary configs in the
-    # local shell configuration file.
+    # If needed, add the necessary configs in the local shell configuration file
     if ! grep "^$pathConfig" < "$LOCAL_SHELL_CONFIG_FILE" &> /dev/null; then
         execute \
             "printf '%s' '$configs' >> $LOCAL_SHELL_CONFIG_FILE \

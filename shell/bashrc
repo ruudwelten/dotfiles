@@ -1,4 +1,41 @@
 #!/usr/bin/env bash
 
-[ -n "$PS1" ] \
-    && . ~/.bash_profile
+# The bashrc file is loaded by non-login shells, this is the default in the
+# desktop environment in Linux. Yet, macOS' Terminal app does load login shells
+# and as such loads `.bash_profile`, which sources this file.
+
+source_bash_files() {
+
+    declare -r CURRENT_DIRECTORY="$(pwd)"
+
+    declare -r -a FILES_TO_SOURCE=(
+        "bash_aliases"
+        "bash_prompt"
+        "bash_functions"
+        "bash.local"  # For local settings that should
+                      # not be under version control.
+    )
+
+    local file=""
+    local i=""
+
+    cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" \
+        && . "../os/utils.sh"
+
+    declare -r OS="$(get_os)"
+
+    for i in ${!FILES_TO_SOURCE[*]}; do
+
+        file="$HOME/.${FILES_TO_SOURCE[$i]}"
+
+        [ -r "$file" ] \
+            && . "$file"
+
+    done
+
+    cd "$CURRENT_DIRECTORY"
+
+}
+
+source_bash_files
+unset -f source_bash_files
