@@ -25,3 +25,5 @@ esac
 ./repositories.sh
 
 ./git.sh
+
+./browsers.sh
