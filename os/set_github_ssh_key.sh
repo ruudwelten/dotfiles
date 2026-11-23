@@ -7,9 +7,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 add_ssh_configs() {
 
-    printf "%s\n" \
+    [ "$(get_os)" == "macos" ] && printf "\n" \
         "Host *" \
-        "  UseKeychain yes" \
+        "  UseKeychain yes" >> ~/.ssh/config
+
+    printf "\n" \
         "Host github.com" \
         "  IdentityFile $1" \
         "  LogLevel ERROR" >> ~/.ssh/config
