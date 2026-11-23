@@ -16,3 +16,7 @@ case $? in
         answer_is_yes && execute "sudo dnf update" "Updating packages"
         ;;
 esac
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+./git.sh
