@@ -5,6 +5,18 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+backup_file() {
+
+    local -r FILE="$1"
+
+    D=$(date +%Y%m%d%H%M%S)
+
+    BACKUP_FILE=$FILE.bak.$D
+
+    mv $FILE $BACKUP_FILE
+
+}
+
 create_symlinks() {
 
     declare -a FILES_TO_SYMLINK=(
@@ -36,13 +48,23 @@ create_symlinks() {
                 "$targetFile → $sourceFile"
 
         elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-            print_success "$targetFile → $sourceFile"
+            print_success "$targetFile → $sourceFile (checked)"
         else
 
             if ! $skipQuestions; then
 
-                ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-                if answer_is_yes; then
+                ask_choice "'$targetFile' already exists, do you want to [o]verwrite it, [B]ack it up, or [s]kip it?" o B s
+
+                if [[ ${REPLY,,} == "b" ]]; then
+
+                    backup_file $targetFile
+                    print_success "Backed up as $BACKUP_FILE"
+
+                    execute \
+                        "ln -fs $sourceFile $targetFile" \
+                        "$targetFile → $sourceFile"
+
+                elif [[ ${REPLY,,} == "o" ]]; then
 
                     rm -rf "$targetFile"
 
@@ -51,7 +73,9 @@ create_symlinks() {
                         "$targetFile → $sourceFile"
 
                 else
-                    print_error "$targetFile → $sourceFile"
+
+                    print_warning "$targetFile → $sourceFile (skipped)"
+
                 fi
 
             fi

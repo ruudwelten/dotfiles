@@ -17,6 +17,49 @@ ask() {
     read -r
 }
 
+ask_choice() {
+    local prompt="$1"; shift
+    local -a opts=()
+    local arg item default="" hint=""
+
+    for arg in "$@"; do
+        item="${arg,,}"
+        opts+=("$item")
+        # An uppercase arg marks the default
+        [[ "$arg" != "$item" ]] && default="$item"
+    done
+
+    local want=" ${opts[*]} "
+
+    # build the hint: "(Y/n/o)" with the default shown in caps
+    for arg in "${opts[@]}"; do
+        if [[ "$arg" == "$default" ]]; then
+            hint+="${arg^^}/"
+        else
+            hint+="$arg/"
+        fi
+    done
+    hint="(${hint%/})"
+
+    while true; do
+        print_question "$prompt $hint "
+        read -r REPLY
+        REPLY="${REPLY,,}"
+
+        if [[ -z "$REPLY" ]]; then  # Bare Enter
+            if [[ -n "$default" ]]; then
+                REPLY="$default"
+                return 0
+            fi
+            print_error "Please enter one of: ${opts[*]}" >&2
+            continue
+        fi
+
+        [[ "$want" == *" $REPLY "* ]] && return 0
+        print_error "Please enter one of: ${opts[*]}" >&2
+    done
+}
+
 ask_for_confirmation() {
     print_question "$1 (y/n) "
     read -r
@@ -143,7 +186,6 @@ is_supported_version() {
     for (( i=${#v1[@]}; i<${#v2[@]}; i++ )); do
         v1[i]=0
     done
-
 
     for (( i=0; i<${#v1[@]}; i++ )); do
 
