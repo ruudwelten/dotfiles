@@ -74,7 +74,7 @@ create_symlinks() {
 
                 else
 
-                    print_warning "$targetFile → $sourceFile (skipped)"
+                    print_info "$targetFile → $sourceFile (skipped)"
 
                 fi
 
