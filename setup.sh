@@ -77,8 +77,6 @@ download_dotfiles() {
             fi
         done
 
-        printf "\n"
-
     else
 
         rm -rf "$dotfilesDirectory" &> /dev/null
@@ -214,7 +212,7 @@ main() {
     ./os/create_local_config_files.sh
 
     # Install applications and preferences
-    ./applications/main.sh
+    ./applications/main.sh || exit 1
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
