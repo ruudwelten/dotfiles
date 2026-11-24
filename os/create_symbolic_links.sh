@@ -22,6 +22,7 @@ create_symlinks() {
     declare -a FILES_TO_SYMLINK=(
 
         "shell/bash_aliases"
+        "shell/path"
         "shell/bash_profile"
         "shell/bash_prompt"
         "shell/bashrc"
