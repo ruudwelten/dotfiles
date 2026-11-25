@@ -85,6 +85,17 @@ ask_for_sudo() {
 
 }
 
+backup_file() {
+
+    local -r FILE="$1"
+    BACKED_UP_FILE="$2"
+
+    [ -z "$BACKED_UP_FILE" ] && BACKED_UP_FILE=$FILE.bak.$(date +%Y%m%d%H%M%S)
+
+    mv "$FILE" "$BACKED_UP_FILE"
+
+}
+
 cmd_exists() {
     command -v "$1" &> /dev/null
 }

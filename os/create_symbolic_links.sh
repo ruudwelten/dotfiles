@@ -5,18 +5,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-backup_file() {
-
-    local -r FILE="$1"
-
-    D=$(date +%Y%m%d%H%M%S)
-
-    BACKUP_FILE=$FILE.bak.$D
-
-    mv $FILE $BACKUP_FILE
-
-}
-
 create_symlinks() {
 
     declare -a FILES_TO_SYMLINK=(
@@ -53,16 +41,23 @@ create_symlinks() {
 
             if ! $skipQuestions; then
 
-                ask_choice "'$targetFile' already exists, do you want to [o]verwrite it, [B]ack it up, or [s]kip it?" o B s
+                ask_choice "'$targetFile' already exists, do you want to overwrite [o] it, backup [b], or skip [s] it?" o B s
 
                 if [[ $REPLY == "b" ]]; then
 
-                    backup_file $targetFile
-                    print_success "Backed up as $BACKUP_FILE"
+                    if backup_file "$targetFile"; then
 
-                    execute \
-                        "ln -fs $sourceFile $targetFile" \
-                        "$targetFile → $sourceFile"
+                        print_success "Backed up as $BACKED_UP_FILE"
+
+                        execute \
+                            "ln -fs $sourceFile $targetFile" \
+                            "$targetFile → $sourceFile"
+
+                    else
+
+                        print_error "Could not back up $targetFile (skipped)"
+
+                    fi
 
                 elif [[ $REPLY == "o" ]]; then
 

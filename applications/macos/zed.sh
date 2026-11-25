@@ -17,47 +17,66 @@ install_zed() {
 
 }
 
-ask_for_overwrite_or_diff() {
+overwrite_backup_diff_skip() {
 
-    ask "Zed $NAME file already exists, would you like to overwrite this [y] or view the diff [d]? (y/n/d) "
-    answer_is_yes && return 0
-    answer_is_no && return 1
+    ask_choice "Zed $NAME file already exists, would you like to backup [b], overwrite [o], view the diff [d] or skip [s]?" B o d s
 
-    printf "\n"
-    [[ "$REPLY" =~ ^[Dd]$ ]] && git diff --color=always $2 $1 | sed 's/^/       /'
-    printf "\n\n"
+    if [[ $REPLY == "d" ]]; then  # Diff
 
-    ask "Would you like to overwrite this file? (y/n) "
-    answer_is_yes && return 0 || return 1
+        printf "\n"
+        git diff --color=always "$TARGET" "$SOURCE" | sed 's/^/       /'
+        printf "\n\n"
+
+        ask_choice "Would you like to backup [b], overwrite [o] or skip [s] this file?" B o s
+    fi
+
+    if [[ $REPLY == "b" ]]; then  # Backup
+
+        if ! backup_file "$TARGET"; then
+            print_error "Could not back up Zed $NAME"
+            return 1
+        fi
+
+        print_success "Zed $NAME backed up as $BACKED_UP_FILE"
+
+    elif [[ $REPLY == "s" ]]; then  # Skip
+
+        return 1
+
+    fi
+
+    return 0  # Backed up or overwrite
 
 }
 
-copy_zed_config() {
+symlink_zed_config() {
 
     local FILE=$1
     local NAME=$2
 
     local CONFIG_DIR="$HOME/.config/zed"
-    local SOURCE="preferences/Zed/$FILE"
-    local DEST="$CONFIG_DIR/$FILE"
+    local SOURCE="$(pwd)/preferences/Zed/$FILE"
+    local TARGET="$CONFIG_DIR/$FILE"
 
-    # If file does not exist, copy the file and return
-    if [[ ! -f "$CONFIG_DIR/$FILE" ]]; then
-        execute "cp $SOURCE $CONFIG_DIR" "Copy Zed $NAME"
+    mkdir -p "$CONFIG_DIR"
+
+    # Already symlinked, nothing to do
+    if [[ "$(readlink "$TARGET")" == "$SOURCE" ]]; then
+
+        print_success "Zed $NAME already symlinked"
         return
+
     fi
 
-    if $(git diff --quiet $DEST $SOURCE) 2>/dev/null; then
-        # Files are equal, return
-        print_info "Existing $NAME is the same as $FILE"
+    # If file exists, ask what to do
+    if [[ -e "$TARGET" ]] && ! overwrite_backup_diff_skip; then
+
+        print_info "Zed $NAME not overwritten"
         return
-    else
-        # Files are different, ask for overwrite or diff
-        ask_for_overwrite_or_diff $SOURCE $DEST $CONFIG_DIR && \
-            execute "cp $SOURCE $CONFIG_DIR" "Copy Zed $NAME" && return
+
     fi
 
-    print_warning "Zed $NAME not overwritten"
+    execute "ln -fs '$SOURCE' '$TARGET'" "Symlink Zed $NAME"
 
 }
 
@@ -76,8 +95,8 @@ main() {
     print_in_purple "\n   Zed\n\n"
 
     install_zed
-    copy_zed_config "settings.json" "settings"
-    copy_zed_config "keymap.json" "keymap"
+    symlink_zed_config "settings.json" "settings"
+    symlink_zed_config "keymap.json" "keymap"
     set_zed_as_git_editor
 
 }
