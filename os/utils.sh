@@ -112,6 +112,7 @@ execute() {
     local -r TMP_FILE="$(mktemp /tmp/XXXXX)"
 
     local exitCode=0
+    local successCode=0
     local cmdsPID=""
 
     # If the current process is ended, also end all its subprocesses.
@@ -310,7 +311,7 @@ print_warning() {
 set_trap() {
 
     trap -p "$1" | grep "$2" &> /dev/null \
-        || trap '$2' "$1"
+        || trap "$2" "$1"
 
 }
 
