@@ -43,7 +43,11 @@ ask_choice() {
 
     while true; do
         print_question "$prompt $hint "
-        read -r REPLY
+        if ! read -r REPLY && [[ -z "$REPLY" && -z "$default" ]]; then
+            printf "\n"
+            print_error "No input available" >&2
+            return 1
+        fi
         REPLY="$(to_lower "$REPLY")"
 
         if [[ -z "$REPLY" ]]; then  # Bare Enter
