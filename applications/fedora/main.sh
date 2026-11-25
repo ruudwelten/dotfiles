@@ -38,3 +38,4 @@ esac
 ./git.sh
 
 ./browsers.sh
+./zed.sh

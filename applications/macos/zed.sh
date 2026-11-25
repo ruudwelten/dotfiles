@@ -7,7 +7,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Packages are installed automatically when Zed is launched, see key
-# "auto_install_extensions" in ./preferences/Zed/settings.json
+# "auto_install_extensions" in ../preferences/Zed/settings.json
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -55,10 +55,17 @@ symlink_zed_config() {
     local NAME=$2
 
     local CONFIG_DIR="$HOME/.config/zed"
-    local SOURCE="$(pwd)/preferences/Zed/$FILE"
+    local SOURCE="$(cd ../preferences/Zed && pwd)/$FILE"
     local TARGET="$CONFIG_DIR/$FILE"
 
     mkdir -p "$CONFIG_DIR"
+
+    if [[ ! -f "$SOURCE" ]]; then
+
+        print_error "Zed $NAME source not found: $SOURCE"
+        return 1
+
+    fi
 
     # Already symlinked, nothing to do
     if [[ "$(readlink "$TARGET")" == "$SOURCE" ]]; then
