@@ -19,14 +19,21 @@
     }
   },
   {
-    "context": "Pane",
+    "context": "Editor && os == macos",
     "bindings": {
-      "ctrl-tab": "pane::ActivateNextItem"
+      "cmd-shift-l": "editor::SplitSelectionIntoLines"
+    }
+  },
+  {
+    "context": "Editor && os == linux",
+    "bindings": {
+      "ctrl-shift-l": "editor::SplitSelectionIntoLines"
     }
   },
   {
     "context": "Pane",
     "bindings": {
+      "ctrl-tab": "pane::ActivateNextItem",
       "ctrl-shift-tab": "pane::ActivatePreviousItem"
     }
   }
