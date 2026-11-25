@@ -23,7 +23,7 @@ ask_choice() {
     local arg item default="" hint=""
 
     for arg in "$@"; do
-        item="${arg,,}"
+        item="$(to_lower "$arg")"
         opts+=("$item")
         # An uppercase arg marks the default
         [[ "$arg" != "$item" ]] && default="$item"
@@ -34,7 +34,7 @@ ask_choice() {
     # build the hint: "(Y/n/o)" with the default shown in caps
     for arg in "${opts[@]}"; do
         if [[ "$arg" == "$default" ]]; then
-            hint+="${arg^^}/"
+            hint+="$(to_upper "$arg")/"
         else
             hint+="$arg/"
         fi
@@ -44,7 +44,7 @@ ask_choice() {
     while true; do
         print_question "$prompt $hint "
         read -r REPLY
-        REPLY="${REPLY,,}"
+        REPLY="$(to_lower "$REPLY")"
 
         if [[ -z "$REPLY" ]]; then  # Bare Enter
             if [[ -n "$default" ]]; then
@@ -355,4 +355,14 @@ skip_questions() {
 
     return 1
 
+}
+
+# Bash 3.2 (macOS default) compatible alternative to `${VAR,,}` (Bash 4.0)
+to_lower() {
+    printf "%s" "$1" | tr "[:upper:]" "[:lower:]"
+}
+
+# Bash 3.2 (macOS default) compatible alternative to `${VAR^^}` (Bash 4.0)
+to_upper() {
+    printf "%s" "$1" | tr "[:lower:]" "[:upper:]"
 }

@@ -34,8 +34,7 @@ create_symlinks() {
     local targetFile=""
     local skipQuestions=false
 
-    skip_questions "$@" \
-        && skipQuestions=true
+    skip_questions "$@" && skipQuestions=true
 
     for i in "${FILES_TO_SYMLINK[@]}"; do
 
@@ -44,19 +43,19 @@ create_symlinks() {
 
         if [ ! -e "$targetFile" ] || $skipQuestions; then
 
-            execute \
-                "ln -fs $sourceFile $targetFile" \
-                "$targetFile → $sourceFile"
+            execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
 
         elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
+
             print_success "$targetFile → $sourceFile (checked)"
+
         else
 
             if ! $skipQuestions; then
 
                 ask_choice "'$targetFile' already exists, do you want to [o]verwrite it, [B]ack it up, or [s]kip it?" o B s
 
-                if [[ ${REPLY,,} == "b" ]]; then
+                if [[ $REPLY == "b" ]]; then
 
                     backup_file $targetFile
                     print_success "Backed up as $BACKUP_FILE"
@@ -65,7 +64,7 @@ create_symlinks() {
                         "ln -fs $sourceFile $targetFile" \
                         "$targetFile → $sourceFile"
 
-                elif [[ ${REPLY,,} == "o" ]]; then
+                elif [[ $REPLY == "o" ]]; then
 
                     rm -rf "$targetFile"
 
