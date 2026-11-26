@@ -58,7 +58,8 @@ install_nvm() {
     execute \
         "git clone --quiet $NVM_GIT_REPO_URL $NVM_DIRECTORY" \
         "nvm (install)" \
-    && add_nvm_configs
+    && add_nvm_configs \
+    && source "$HOME/.bash.local"
 
 }
 
@@ -70,15 +71,6 @@ update_nvm() {
             && git checkout --quiet \$(git describe --abbrev=0 --tags) \
             && . $NVM_DIRECTORY/nvm.sh" \
         "nvm (upgrade)"
-
-}
-
-install_or_update_yarn() {
-
-    # Install the latest stable version of Yarn
-    execute \
-        "npm install --global --silent yarn" \
-        "Yarn"
 
 }
 
@@ -98,7 +90,9 @@ main() {
 
     install_npm_package "npm (update)" "npm"
 
-    install_or_update_yarn
+    install_npm_package "Yarn" "yarn"
+
+    install_npm_package "pnpm" "--allow-scripts=pnpm pnpm"
 
 }
 
