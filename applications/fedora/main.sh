@@ -34,9 +34,10 @@ esac
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ./repositories.sh
+./git.sh
 ./../node.sh
 
-./git.sh
+./../python.sh
 
 ./browsers.sh
 ./zed.sh

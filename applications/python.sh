@@ -31,6 +31,8 @@ fi
             && . $LOCAL_SHELL_CONFIG_FILE" \
         "pyenv (update $LOCAL_SHELL_CONFIG_FILE)"
 
+    source "$LOCAL_SHELL_CONFIG_FILE"
+
 }
 
 install_latest_stable_python() {

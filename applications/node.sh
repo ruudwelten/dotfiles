@@ -30,6 +30,8 @@ export NVM_DIR=\"$NVM_DIRECTORY\"
             && . $LOCAL_SHELL_CONFIG_FILE" \
         "nvm (update $LOCAL_SHELL_CONFIG_FILE)"
 
+    source $LOCAL_SHELL_CONFIG_FILE
+
 }
 
 install_latest_stable_node() {
@@ -44,10 +46,7 @@ install_latest_stable_node() {
 
 install_npm_package() {
 
-    execute \
-        ". $HOME/.bash.local \
-            && npm install --global --silent $2" \
-        "$1"
+    execute "npm install --global --silent $2" "$1"
 
 }
 
@@ -59,7 +58,6 @@ install_nvm() {
         "git clone --quiet $NVM_GIT_REPO_URL $NVM_DIRECTORY" \
         "nvm (install)" \
     && add_nvm_configs \
-    && source "$HOME/.bash.local"
 
 }
 
